@@ -1,5 +1,5 @@
 # Name: Iteration Unit Test
-# Time: 8/31/2021 @ 10:44 am
+# Time: 9/16/2021 @ 9:17 am
 
 #Helper Functions
 import operator as op
@@ -66,9 +66,9 @@ class Unit():
         # If the function is a mutator, we don't ask for its return value.
         # Instead we compare the input after the function is called to the correct mutated value.
         # Six test types are required:
-        # 1. Verify equality of content: eq_comp
+        # 1. Verify equality of value: eq_comp
         # 2. Verify identity: is_comp
-        # 3. Verify content equality and non-identity: eq_not_is
+        # 3. Verify equality of value and non-identity: eq_not_is
         # 4. Verify that two lists have the same elements, order irrelevant: elems_comp
         # 5. Verify that two lists have same elements in same order: order_comp
         # 6. Verify that two floats are close enough: approx_eq
@@ -105,6 +105,9 @@ class UnitTest():
                 expected_value = case[1]
                 arg_str = build_arg_str(arg, unit.is_polyadic)
                 test_file.write("Argument(s): " + arg_str + "  ")
+                # Now flush the contents of the write buffer so that if a function hangs,
+                # the report will show precisely where it happened.
+                test_file.flush()
                 try:
                     if unit.is_polyadic:
                         actual_value = unit.func(*arg)
@@ -143,7 +146,7 @@ class UnitTest():
                 if pts_lost > 0:
                     test_file.write("\nFunction \"" + name + "\", points lost " + str(pts_lost) + ".")
         else:
-            test_file.write("\nPerfection!")
+            test_file.write(" Perfection!")
         test_file.write("\n\nFinal Score: " + str(self.score) + "/" + str(self.num_tests))
 
 # Test Cases (tc)
